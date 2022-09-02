@@ -287,4 +287,12 @@ class UserRepositoryTests {
         // u2가 구독중인 회원 : 0
         assertThat(u2.getFollowings().size()).isEqualTo(0);
     }
+
+    @Test
+    @DisplayName("관심사 삭제 시 고아 요소 삭제")
+    void t16() {
+        SiteUser u1 = userRepository.getQslUser(1L);
+
+        u1.removeInterestKeywordContent("농구");
+    }
 }
