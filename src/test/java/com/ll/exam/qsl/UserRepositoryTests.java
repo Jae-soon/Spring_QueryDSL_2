@@ -1,5 +1,6 @@
 package com.ll.exam.qsl;
 
+import com.ll.exam.qsl.interestKeyword.entity.InterestKeyword;
 import com.ll.exam.qsl.user.entity.SiteUser;
 import com.ll.exam.qsl.user.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -289,10 +291,20 @@ class UserRepositoryTests {
     }
 
     @Test
-    @DisplayName("관심사 삭제 시 고아 요소 삭제")
+    @DisplayName("관심사 삭제")
     void t16() {
         SiteUser u1 = userRepository.getQslUser(1L);
 
         u1.removeInterestKeywordContent("농구");
     }
+
+    @Test
+    @DisplayName("자신이 팔로우 하고 있는 사람이 좋아하는 키워드 전부 가져오기")
+    void t17() {
+        SiteUser u8 = userRepository.getQslUser(8L);
+
+        List<String> fk = userRepository.getInterestKeywordByFollowing(u8);
+        assertThat(fk.size()).isEqualTo(3);
+    }
+
 }
